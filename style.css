@@ -1,0 +1,165 @@
+/* ===========================
+   Google Font
+=========================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ===========================
+   Reset
+=========================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/* ===========================
+   Body
+=========================== */
+body{
+    background:#0f172a;
+    color:white;
+    min-height:100vh;
+    padding:30px;
+}
+
+/* ===========================
+   Header
+=========================== */
+header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+header h1{
+    font-size:2.3rem;
+    margin-bottom:8px;
+}
+
+header p{
+    color:#94a3b8;
+}
+
+/* ===========================
+   Day Buttons
+=========================== */
+.days{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:30px;
+}
+
+.day-btn{
+    border:none;
+    background:#1e293b;
+    color:white;
+    padding:12px 18px;
+    border-radius:12px;
+    cursor:pointer;
+    transition:.3s;
+    font-size:15px;
+}
+
+.day-btn:hover{
+    background:#2563eb;
+    transform:translateY(-2px);
+}
+
+.day-btn.active{
+    background:#3b82f6;
+}
+
+/* ===========================
+   Schedule
+=========================== */
+.schedule{
+    display:none;
+    max-width:850px;
+    margin:auto;
+}
+
+.schedule.active{
+    display:block;
+}
+
+/* ===========================
+   Cards
+=========================== */
+.card{
+    background:#1e293b;
+    border-left:6px solid #3b82f6;
+    margin:14px 0;
+    padding:18px;
+    border-radius:12px;
+    font-size:17px;
+    transition:.25s;
+    box-shadow:0 8px 18px rgba(0,0,0,.25);
+}
+
+.card:hover{
+    transform:translateX(8px);
+    background:#263549;
+}
+
+.card span{
+    font-size:22px;
+    margin-right:12px;
+}
+
+/* ===========================
+   Small Day Sections
+=========================== */
+.schedule h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.schedule p{
+    text-align:center;
+    color:#cbd5e1;
+    background:#1e293b;
+    padding:25px;
+    border-radius:12px;
+}
+
+/* ===========================
+   Scrollbar
+=========================== */
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#0f172a;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#3b82f6;
+    border-radius:10px;
+}
+
+/* ===========================
+   Mobile
+=========================== */
+@media(max-width:768px){
+
+    body{
+        padding:15px;
+    }
+
+    header h1{
+        font-size:1.7rem;
+    }
+
+    .day-btn{
+        width:100%;
+    }
+
+    .card{
+        font-size:15px;
+        padding:15px;
+    }
+
+}
