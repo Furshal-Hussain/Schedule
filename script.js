@@ -1,49 +1,40 @@
-const CACHE_NAME = "study-schedule-v1";
+function showDay(dayId, event) {
 
-const BASE = "/Schedule/";
+    document.querySelectorAll(".schedule").forEach(s => {
+        s.classList.remove("active");
+    });
 
-const urlsToCache = [
-  BASE,
-  BASE + "index.html",
-  BASE + "style.css",
-  BASE + "script.js",
-  BASE + "manifest.json",
-  BASE + "icon-192.png",
-  BASE + "icon-512.png"
-];
+    document.querySelectorAll(".day-btn").forEach(b => {
+        b.classList.remove("active");
+    });
 
-// Install
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log("Caching files...");
-      return cache.addAll(urlsToCache);
-    })
-  );
-  self.skipWaiting();
-});
+    document.getElementById(dayId).classList.add("active");
 
-// Activate
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
-      );
-    })
-  );
-  self.clients.claim();
-});
+    if (event) {
+        event.target.classList.add("active");
+    }
+}
 
-// Fetch
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
-});
+window.onload = function () {
+
+    const days = [
+        "sunday","monday","tuesday","wednesday",
+        "thursday","friday","saturday"
+    ];
+
+    const todayId = days[new Date().getDay()];
+
+    document.querySelectorAll(".schedule").forEach(s => {
+        s.classList.remove("active");
+    });
+
+    const el = document.getElementById(todayId);
+    if (el) el.classList.add("active");
+
+    document.querySelectorAll(".day-btn").forEach(b => {
+        b.classList.remove("active");
+        if (b.textContent.toLowerCase() === todayId) {
+            b.classList.add("active");
+        }
+    });
+};
