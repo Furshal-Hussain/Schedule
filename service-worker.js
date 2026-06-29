@@ -1,13 +1,13 @@
-const CACHE_NAME = "study-schedule-v1";
+const BASE = "/Schedule/";
 
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/style.css",
-  "/script.js",
-  "/manifest.json",
-  "/icon-192.png",
-  "/icon-512.png"
+  BASE,
+  BASE + "index.html",
+  BASE + "style.css",
+  BASE + "script.js",
+  BASE + "manifest.json",
+  BASE + "icon-192.png",
+  BASE + "icon-512.png"
 ];
 
 // Install
