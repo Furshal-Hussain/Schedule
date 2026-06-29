@@ -1,47 +1,37 @@
-const BASE = "/Schedule/";
+const CACHE_NAME = "study-schedule-v2";
 
 const urlsToCache = [
-  BASE,
-  BASE + "index.html",
-  BASE + "style.css",
-  BASE + "script.js",
-  BASE + "manifest.json",
-  BASE + "icon-192.png",
-  BASE + "icon-512.png"
+  "./",
+  "./index.html",
+  "./style.css",
+  "./script.js",
+  "./manifest.json",
+  "./icon-192.png",
+  "./icon-512.png"
 ];
 
-// Install
-self.addEventListener("install", (event) => {
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log("Caching files...");
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
   self.skipWaiting();
 });
 
-// Activate
-self.addEventListener("activate", (event) => {
+self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) return caches.delete(key);
         })
-      );
-    })
+      )
+    )
   );
   self.clients.claim();
 });
 
-// Fetch (offline support)
-self.addEventListener("fetch", (event) => {
+self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request).then(res => res || fetch(event.request))
   );
 });
