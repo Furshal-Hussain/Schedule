@@ -3,7 +3,7 @@
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
     try {
-      const registration = await navigator.serviceWorker.register("/service-worker.js");
+      const registration = await navigator.serviceWorker.register("/furshal-hussain.github.io/service-worker.js");
       console.log("Service Worker registered successfully:", registration);
 
       // Optional: check updates automatically
