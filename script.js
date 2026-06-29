@@ -1,56 +1,49 @@
-// Show the selected day's schedule
-function showDay(dayId) {
+const CACHE_NAME = "study-schedule-v1";
 
-    // Hide all schedules
-    const schedules = document.querySelectorAll(".schedule");
-    schedules.forEach(schedule => {
-        schedule.classList.remove("active");
-    });
+const BASE = "/Schedule/";
 
-    // Remove active class from all buttons
-    const buttons = document.querySelectorAll(".day-btn");
-    buttons.forEach(button => {
-        button.classList.remove("active");
-    });
+const urlsToCache = [
+  BASE,
+  BASE + "index.html",
+  BASE + "style.css",
+  BASE + "script.js",
+  BASE + "manifest.json",
+  BASE + "icon-192.png",
+  BASE + "icon-512.png"
+];
 
-    // Show selected schedule
-    document.getElementById(dayId).classList.add("active");
+// Install
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log("Caching files...");
+      return cache.addAll(urlsToCache);
+    })
+  );
+  self.skipWaiting();
+});
 
-    // Highlight selected button
-    event.target.classList.add("active");
-}
+// Activate
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim();
+});
 
-// Automatically highlight today's day when the page loads
-window.onload = function () {
-
-    const today = new Date().getDay();
-
-    const days = [
-        "sunday",
-        "monday",
-        "tuesday",
-        "wednesday",
-        "thursday",
-        "friday",
-        "saturday"
-    ];
-
-    const todayId = days[today];
-
-    // Show today's schedule
-    document.querySelectorAll(".schedule").forEach(schedule => {
-        schedule.classList.remove("active");
-    });
-
-    document.getElementById(todayId).classList.add("active");
-
-    // Highlight today's button
-    document.querySelectorAll(".day-btn").forEach(button => {
-        button.classList.remove("active");
-
-        if (button.textContent.toLowerCase() === todayId) {
-            button.classList.add("active");
-        }
-    });
-
-};
+// Fetch
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
+});
